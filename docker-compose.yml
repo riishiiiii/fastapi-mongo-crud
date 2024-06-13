@@ -1,0 +1,34 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodata:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: secret
+    networks:
+      - mongocrud
+
+  app:
+    build: .
+    container_name: app
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    networks:
+      - mongocrud
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URI: mongodb://root:secret@mongo:27017/
+
+networks:
+  mongocrud:
+
+volumes:
+  mongodata:

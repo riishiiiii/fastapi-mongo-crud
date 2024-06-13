@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, Query
-from database import get_db
-from schema import Items
+from .database import get_db
+from .schema import Items
 from pymongo.errors import DuplicateKeyError
 from motor.core import AgnosticDatabase
 from typing import Optional
